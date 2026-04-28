@@ -366,7 +366,7 @@ Step 5: Power BI       → 4-page dashboard, 44 DAX measures, cross-filtering,
 
 ## 👤 About
 
-**Ajay Patel**
+**[Ajay Patel]**
 Data Analyst | 2.5 years experience in Python · SQL · Power BI · Excel
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat&logo=linkedin)](https://linkedin.com/in/ajay-patel-006may)
