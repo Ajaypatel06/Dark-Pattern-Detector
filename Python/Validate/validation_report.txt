@@ -1,0 +1,153 @@
+Dark Pattern Detector — Step 1 Validation Report
+Generated: 2025-03-19
+════════════════════════════════════════════════════════════════
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 1 — FILE EXISTENCE & SHAPE
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅  listings_raw.csv             10,717 rows × 17 cols
+✅  dark_patterns_classified.csv  7,846 rows × 13 cols
+✅  platform_summary.csv             15 rows ×  9 cols
+✅  pattern_type_trend.csv           45 rows ×  5 cols
+✅  category_heatmap.csv             64 rows ×  3 cols
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 2 — COLUMN INVENTORY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+listings_raw (17 cols):
+  listing_id, year, month, platform, category, product_name, brand,
+  actual_price_inr, displayed_original_price_inr, discount_pct_shown,
+  hidden_fee_inr, effective_price_inr, dark_pattern_type,
+  ccpa_category, severity_score, ccpa_violation, price_inflation_inr
+
+dark_patterns_classified (13 cols):
+  listing_id, year, month, platform, category, product_name, brand,
+  dark_pattern_type, ccpa_category, severity_score,
+  hidden_fee_inr, price_inflation_inr, effective_price_inr
+
+platform_summary (9 cols):
+  year, platform, total_listings, listings_with_dark_pattern,
+  dark_pattern_rate_pct, avg_severity, total_hidden_fees_inr,
+  avg_price_inflation_inr, total_consumer_overcharge_inr
+
+pattern_type_trend (5 cols):
+  year, dark_pattern_type, count, avg_severity, pct_of_all_listings
+
+category_heatmap (3 cols):
+  category, dark_pattern_type, count
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 3 — NULL ANALYSIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+listings_raw:
+  ⚠️  dark_pattern_type: 2,871 nulls (26.8%)
+      → EXPECTED BEHAVIOUR: these are the 2,871 non-violation
+        rows (ccpa_violation = "No"). Nulls here are by design.
+        severity_score = 0 for same rows — also by design.
+      → ACTION: use ccpa_violation == "Yes" filter for all
+        pattern-level analysis. No imputation needed.
+
+dark_patterns_classified:  ✅ Zero nulls
+platform_summary:          ✅ Zero nulls
+category_heatmap:          ✅ Zero nulls
+
+pattern_type_trend:
+  ⚠️  dark_pattern_type: 5 nulls (11.1%) — one per year
+      → Represents the "no dark pattern" bucket (non-violation
+        listings), pct_of_all_listings ≈ 26–27% each year.
+      → ACTION: DROP these 5 rows before trend visualisations.
+        Add comment in notebook explaining the exclusion.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 4 — DUPLICATES
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅  listings_raw.csv             — 0 duplicates
+✅  dark_patterns_classified.csv — 0 duplicates
+✅  platform_summary.csv         — 0 duplicates
+✅  pattern_type_trend.csv       — 0 duplicates
+✅  category_heatmap.csv         — 0 duplicates
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 5 — DOMAIN VALIDATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Platforms:        ✅  ['Flipkart', 'Meesho', 'Nykaa'] — exact match
+Years:            ✅  [2021, 2022, 2023, 2024, 2025] — full coverage
+Categories:       ✅  8 categories detected:
+                      Beauty, Books, Electronics, Fashion,
+                      Footwear, Home & Kitchen, Mobile Phones, Toys
+Dark patterns:    ✅  8 types:
+                      Confirm Shaming, Fake Countdown Timer,
+                      False Scarcity, Forced Continuity,
+                      Hidden Convenience Fee, Inflated Original Price,
+                      Misleading Discount Badge, Social Proof Manipulation
+
+severity_score:
+  ✅  Violation rows  — range [2, 5], mean 3.76 — valid
+  ℹ️  Non-violation rows — severity = 0 (by design, not an error)
+
+ccpa_violation:   ✅  Binary string field "Yes" / "No"
+                      NOTE: stored as string, not boolean.
+                      Use == "Yes" not == True in all queries.
+
+price_inflation_inr:
+  ✅  Violation rows: min ₹66 | median ₹706 | mean ₹1,270 | max ₹11,000
+  ✅  All values positive — no inverted pricing detected
+
+hidden_fee_inr:
+  ✅  966 listings have hidden fees (9.0% of total)
+  ✅  Range: ₹20 – ₹120 | Mean (non-zero): ₹59.76
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 6 — CROSS-FILE CONSISTENCY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+✅  dark_patterns_classified rows (7,846)
+    = listings_raw[ccpa_violation=="Yes"] (7,846) — EXACT MATCH
+
+✅  platform_summary: 3 platforms × 5 years = 15 rows — correct
+✅  pattern_type_trend: 8 patterns × 5 years = 40 rows +
+    5 null/non-violation rows = 45 rows — correct
+✅  category_heatmap: 8 categories × 8 patterns = 64 rows — correct
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 7 — KEY METRICS (verified against raw data)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Total listings analysed:         10,717
+Total CCPA violations:            7,846  (73.2%)
+Platforms covered:                3 (Flipkart, Meesho, Nykaa)
+Year range:                       2021–2025
+Product categories:               8
+Dark pattern types detected:      8
+Avg severity score (violations):  3.76 / 5.00
+Avg price inflation (violations): ₹1,270 per listing
+Total hidden fees in dataset:     ₹57,729
+Most common dark pattern:         Forced Continuity (1,078 listings)
+Highest avg violation rate:       Meesho (~77.8% avg across years)
+Lowest avg violation rate:        Nykaa (~67.7% avg across years)
+Highest-risk category:            Toys (highest total pattern count)
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+SECTION 8 — ACTIONS BEFORE STEP 2 EDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[1] In listings_raw, add derived column:
+      price_inflation_pct = price_inflation_inr / actual_price_inr * 100
+    (needed for % comparisons in EDA and scoring model)
+
+[2] In pattern_type_trend, drop 5 null rows before visualising:
+      pt_clean = pt[pt["dark_pattern_type"].notna()]
+
+[3] Confirm ccpa_violation comparisons use == "Yes" / == "No"
+    (not True/False) throughout all notebooks and SQL.
+
+[4] severity_score column note for documentation:
+    Scale is 1–5 (not 1–10 as originally assumed).
+    Max observed = 5. Update data dictionary accordingly.
+
+[5] hidden_fee_inr is 0 for ~91% of rows. In scoring model,
+    treat as sparse feature — normalise only over non-zero rows
+    before applying weight, OR use a binary has_hidden_fee flag
+    as an additional input.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+STEP 1 STATUS: ✅ COMPLETE — all 5 files valid, no blockers
+NEXT STEP: notebooks/02_eda.ipynb — Python EDA
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━

@@ -1,0 +1,46 @@
+year,dark_pattern_type,count,avg_severity,pct_of_all_listings
+2021,Confirm Shaming,164,3.0,7.7
+2021,Fake Countdown Timer,184,3.0,8.7
+2021,False Scarcity,211,4.0,9.9
+2021,Forced Continuity,220,4.0,10.3
+2021,Hidden Convenience Fee,199,5.0,9.4
+2021,Inflated Original Price,205,5.0,9.6
+2021,Misleading Discount Badge,182,4.0,8.6
+2021,None,564,0.0,26.5
+2021,Social Proof Manipulation,198,2.0,9.3
+2022,Confirm Shaming,180,3.0,8.5
+2022,Fake Countdown Timer,206,3.0,9.7
+2022,False Scarcity,201,4.0,9.5
+2022,Forced Continuity,221,4.0,10.4
+2022,Hidden Convenience Fee,190,5.0,8.9
+2022,Inflated Original Price,199,5.0,9.4
+2022,Misleading Discount Badge,172,4.0,8.1
+2022,None,575,0.0,27.1
+2022,Social Proof Manipulation,179,2.0,8.4
+2023,Confirm Shaming,210,3.0,9.8
+2023,Fake Countdown Timer,181,3.0,8.4
+2023,False Scarcity,202,4.0,9.4
+2023,Forced Continuity,214,4.0,9.9
+2023,Hidden Convenience Fee,186,5.0,8.6
+2023,Inflated Original Price,187,5.0,8.7
+2023,Misleading Discount Badge,208,4.0,9.7
+2023,None,565,0.0,26.3
+2023,Social Proof Manipulation,199,2.0,9.2
+2024,Confirm Shaming,198,3.0,9.2
+2024,Fake Countdown Timer,176,3.0,8.2
+2024,False Scarcity,195,4.0,9.0
+2024,Forced Continuity,223,4.0,10.3
+2024,Hidden Convenience Fee,193,5.0,9.0
+2024,Inflated Original Price,182,5.0,8.4
+2024,Misleading Discount Badge,217,4.0,10.1
+2024,None,585,0.0,27.1
+2024,Social Proof Manipulation,187,2.0,8.7
+2025,Confirm Shaming,174,3.0,8.1
+2025,Fake Countdown Timer,202,3.0,9.4
+2025,False Scarcity,188,4.0,8.7
+2025,Forced Continuity,200,4.0,9.3
+2025,Hidden Convenience Fee,198,5.0,9.2
+2025,Inflated Original Price,191,5.0,8.8
+2025,Misleading Discount Badge,217,4.0,10.1
+2025,None,582,0.0,27.0
+2025,Social Proof Manipulation,207,2.0,9.6

@@ -1,0 +1,4 @@
+platform,total_violations,mean_harm_score,median_harm_score,max_harm_score,pct_critical,pct_high,avg_severity,avg_inflation_pct,avg_hidden_fee,listings_with_hf,total_consumer_loss,contrib_sev_avg,contrib_inf_avg,contrib_fee_avg,harm_rank
+Flipkart,2641,46.34,46.17,88.74,1.51,13.03,3.77,85.34,9.45,317,3410159,23.9,11.02,1.42,1
+Nykaa,2474,45.69,45.94,87.45,0.53,12.09,3.75,84.36,7.63,302,3063084,23.66,10.89,1.14,2
+Meesho,2731,45.29,46.17,82.15,0.15,10.73,3.76,83.93,5.09,347,3489594,23.7,10.83,0.76,3

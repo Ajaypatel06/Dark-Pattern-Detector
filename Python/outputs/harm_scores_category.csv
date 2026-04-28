@@ -1,0 +1,9 @@
+category,total_violations,mean_harm_score,median_harm_score,max_harm_score,pct_critical,avg_severity,avg_inflation_pct,total_consumer_loss,harm_rank
+Fashion,984,50.74,51.84,88.74,2.64,3.79,117.88,1253975,1
+Footwear,960,48.3,49.4,82.76,0.52,3.76,102.93,846234,2
+Toys,1044,47.27,48.21,84.03,0.57,3.78,93.61,718717,3
+Electronics,907,47.17,46.46,87.45,1.54,3.75,96.11,1171323,4
+Beauty,955,45.55,46.05,84.59,0.31,3.77,81.86,253350,5
+Home & Kitchen,996,44.4,45.64,80.8,0.1,3.73,78.1,1246013,6
+Books,1026,43.84,44.74,81.3,0.19,3.76,70.13,162799,7
+Mobile Phones,974,39.0,40.64,74.95,0.0,3.74,36.59,4310426,8

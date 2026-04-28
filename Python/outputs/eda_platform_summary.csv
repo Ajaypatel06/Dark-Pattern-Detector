@@ -1,0 +1,4 @@
+platform,total_violations,avg_severity,avg_inflation_pct,avg_inflation_inr,median_inflation_inr,listings_with_hidden_fees,violation_rate_pct
+Flipkart,2641,3.77,85.34,1291.24,700.0,317,74.32
+Meesho,2731,3.76,83.93,1277.77,720.0,347,77.76
+Nykaa,2474,3.75,84.36,1238.11,700.0,302,67.74

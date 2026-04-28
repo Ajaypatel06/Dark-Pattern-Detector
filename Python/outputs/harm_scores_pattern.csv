@@ -1,0 +1,9 @@
+dark_pattern_type,total_violations,mean_harm_score,median_harm_score,max_harm_score,pct_critical,avg_severity,avg_inflation_pct,avg_inflation_inr,total_consumer_loss,harm_rank
+Hidden Convenience Fee,966,70.35,69.9,88.74,5.9,5.0,84.38,1222.7,1181126,1
+Inflated Original Price,964,61.37,61.26,79.01,0.0,5.0,84.24,1267.21,1221589,2
+Forced Continuity,1078,48.07,47.82,68.32,0.0,4.0,85.72,1239.82,1336527,3
+False Scarcity,997,48.04,47.9,68.49,0.0,4.0,85.51,1301.89,1297983,4
+Misleading Discount Badge,996,47.76,47.67,68.5,0.0,4.0,83.45,1327.19,1321880,5
+Fake Countdown Timer,949,34.48,34.56,51.54,0.0,3.0,85.05,1207.17,1145608,6
+Confirm Shaming,926,34.46,34.39,51.81,0.0,3.0,84.86,1258.56,1165430,7
+Social Proof Manipulation,970,20.7,20.6,38.03,0.0,2.0,82.97,1332.67,1292694,8

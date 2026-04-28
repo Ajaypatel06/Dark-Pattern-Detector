@@ -1,0 +1,134 @@
+
+Dark Pattern Detector — Consumer Harm Score Model Report
+═══════════════════════════════════════════════════════════════════
+
+1. MODEL METHODOLOGY
+─────────────────────────────────────────────────────────────────
+The Consumer Harm Score is a composite index (0–100) designed to
+quantify the financial and psychological harm caused by each dark
+pattern listing to the end consumer.
+
+Formula:
+  Harm Score = (0.45 × severity_norm
+              + 0.35 × price_inflation_norm
+              + 0.20 × hidden_fee_norm) × 90
+              + 10 (CCPA violation penalty)
+
+where each input is Min-Max normalised to [0, 1] before weighting.
+
+Weight rationale:
+  • Severity (45%):         Highest weight — directly measures
+                             regulatory harm classification.
+  • Price Inflation (35%):  Second-highest — direct financial loss.
+  • Hidden Fee (20%):       Lower weight — sparse feature (9% of
+                             listings), but severe when present.
+
+CCPA Penalty (flat +10): Applied to all violation rows (all 7,846
+  listings here are ccpa_violation="Yes"). Represents the regulatory
+  dimension of harm beyond the financial signal.
+
+Base score range: 0–90 | After CCPA penalty: 10–100
+
+Risk Tiers:
+  🟢 Low:      Score < 50
+  🟡 Medium:   50 ≤ Score < 65
+  🟠 High:     65 ≤ Score < 80
+  🔴 Critical: Score ≥ 80
+
+2. INPUT STATISTICS (violation rows only, n=7,846)
+─────────────────────────────────────────────────────────────────
+  severity_score:         min=2  max=5  mean=3.76
+  price_inflation_pct:    min=4.1%  max=236.3%  mean=84.5%
+  hidden_fee_inr:         min=₹0  max=₹120  mean=₹7.36  (91% zero)
+
+3. HARM SCORE DISTRIBUTION
+─────────────────────────────────────────────────────────────────
+  Score range:  10.3 – 88.7
+  Mean:         45.77
+  Median:       46.13
+  Std dev:      15.38
+
+  Risk Tier Breakdown:
+    🔴 Critical:  57 (0.7%)
+    🟠 High:  936 (11.9%)
+    🟡 Medium:  1,903 (24.3%)
+    🟢 Low:  4,950 (63.1%)
+
+4. PLATFORM RANKINGS
+─────────────────────────────────────────────────────────────────
+  #1 Flipkart
+      Mean Harm Score:      46.34
+      Critical listings:    1.5%
+      Avg severity:         3.77/5
+      Avg inflation:        85.3%
+      Total consumer loss:  ₹3,410,159
+      Component breakdown:  Severity 23.9 | Inflation 11.0 | Fee 1.4 | CCPA +10
+  #2 Nykaa
+      Mean Harm Score:      45.69
+      Critical listings:    0.5%
+      Avg severity:         3.75/5
+      Avg inflation:        84.4%
+      Total consumer loss:  ₹3,063,084
+      Component breakdown:  Severity 23.7 | Inflation 10.9 | Fee 1.1 | CCPA +10
+  #3 Meesho
+      Mean Harm Score:      45.29
+      Critical listings:    0.1%
+      Avg severity:         3.76/5
+      Avg inflation:        83.9%
+      Total consumer loss:  ₹3,489,594
+      Component breakdown:  Severity 23.7 | Inflation 10.8 | Fee 0.8 | CCPA +10
+
+5. CATEGORY RANKINGS
+─────────────────────────────────────────────────────────────────
+  #1 Fashion              score=50.74  critical=2.6%  loss=₹1,253,975
+  #2 Footwear             score=48.30  critical=0.5%  loss=₹846,234
+  #3 Toys                 score=47.27  critical=0.6%  loss=₹718,717
+  #4 Electronics          score=47.17  critical=1.5%  loss=₹1,171,323
+  #5 Beauty               score=45.55  critical=0.3%  loss=₹253,350
+  #6 Home & Kitchen       score=44.40  critical=0.1%  loss=₹1,246,013
+  #7 Books                score=43.84  critical=0.2%  loss=₹162,799
+  #8 Mobile Phones        score=39.00  critical=0.0%  loss=₹4,310,426
+
+6. PATTERN TYPE RANKINGS
+─────────────────────────────────────────────────────────────────
+  #1 Hidden Convenience Fee              score=70.35  severity=5.0  inflation=₹1,223
+  #2 Inflated Original Price             score=61.37  severity=5.0  inflation=₹1,267
+  #3 Forced Continuity                   score=48.07  severity=4.0  inflation=₹1,240
+  #4 False Scarcity                      score=48.04  severity=4.0  inflation=₹1,302
+  #5 Misleading Discount Badge           score=47.76  severity=4.0  inflation=₹1,327
+  #6 Fake Countdown Timer                score=34.48  severity=3.0  inflation=₹1,207
+  #7 Confirm Shaming                     score=34.46  severity=3.0  inflation=₹1,259
+  #8 Social Proof Manipulation           score=20.70  severity=2.0  inflation=₹1,333
+
+7. KEY FINDINGS FROM MODEL
+─────────────────────────────────────────────────────────────────
+• All violation listings score ≥ 10 (CCPA penalty floor) — none
+  escape the regulatory harm classification.
+
+• Meesho ranks #1 most harmful by mean harm score, driven by highest
+  violation rate (77.8%) and highest proportion of Critical-tier listings.
+
+• "Inflated Original Price" and "Hidden Convenience Fee" are the
+  highest-scoring pattern types (severity = 5/5) — primary targets
+  for regulatory enforcement.
+
+• Hidden fees, while sparse (9% of listings), push harm scores
+  significantly higher when present — Flipkart has the most.
+
+• No platform scores below 'High' tier on average — the industry-wide
+  nature of dark patterns is the central finding of this project.
+
+8. OUTPUTS GENERATED
+─────────────────────────────────────────────────────────────────
+  harm_scores_listings.csv  — 7,846 scored rows (all violation listings)
+  harm_scores_platform.csv  — 3-row platform ranking table
+  harm_scores_category.csv  — 8-row category ranking table
+  harm_scores_pattern.csv   — 8-row pattern type ranking table
+  charts/09_harm_score_overview.png
+  charts/10_pattern_harm_scores.png
+  charts/11_platform_category_heatmap.png
+  charts/12_harm_score_trend.png
+
+═══════════════════════════════════════════════════════════════════
+Step 3 COMPLETE — proceed to Step 4: SQL Queries
+═══════════════════════════════════════════════════════════════════
